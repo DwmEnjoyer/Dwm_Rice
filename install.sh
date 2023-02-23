@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dependencias() {
+dependencies() {
   if [ $DISTRO == "Gentoo" ] || [ $DISTRO == "gentoo" ]
   then
   sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama x11-terms/alacritty media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi x11-misc/stalonetray app-admin/doas x11-misc/cbatticon
@@ -114,14 +114,25 @@ dwm_setup() {
 main() {
   set -eu
   export $(grep -v '^#' .env | xargs)
-  dependencias
+  if [ $DEPENDENCIES -eq 1 ]
+  then
+  dependencies
+  fi
+  if [ $PICOM_SETUP -eq 1 ]
   picom_setup
-  if [ $ADI_LAUNCHERS == "Si" ] || [ $ADI_LAUNCHERS == "Si" ]
+  fi
+  if [ $LAUNCHER_SETUP -eq 1 ]
   then
     launcher_setup
   fi
+  if [ $CONFIG_FILES_SETUP -eq 1 ]
+  then
   config_files_setup
+  fi
+  if [ $DWM_SETUP -eq 1 ]
+  then
   dwm_setup
+  fi
 }
 
 main
