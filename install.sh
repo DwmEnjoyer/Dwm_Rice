@@ -90,9 +90,10 @@ config_files_setup() {
   ##Configurando stalonetray
   cd ../stalonetray
   cp stalonetrayrc /home/$USER/.config
-  ##Configurando doas para permitir reiniciar y apagar sin root
+  ##Configurando doas para permitir reiniciar y apagar sin poner contraseña
   echo "permit ${USER} as root" | sudo tee /etc/doas.conf > /dev/null
-  echo "permit nopass ${USER} shutdown reboot" | sudo tee -a /etc/doas.conf > /dev/null
+  echo "permit nopass ${USER} as root cmd /usr/sbin/reboot" | sudo tee -a /etc/doas.conf > /dev/null
+  echo "permit nopass ${USER} as root cmd /usr/sbin/shutdown" | sudo tee -a /etc/doas.conf > /dev/null
 }
 
 
