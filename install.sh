@@ -3,14 +3,14 @@
 dependencias() {
   if [ $DISTRO == "Gentoo" ] || [ $DISTRO == "gentoo" ]
   then
-  sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama x11-terms/alacritty media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi x11-misc/stalonetray
+  sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama x11-terms/alacritty media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi x11-misc/stalonetray app-admin/doas
   elif [ $DISTRO == "Arch" ] || [ $DISTRO == "arch" ]
   then
     sudo pacman -S git fontconfig xorgproto libx11 libxft libxinerama alacritty ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi
-    yay -S otf-takao volctl stalonetray
+    yay -S otf-takao volctl stalonetray doas
   elif [ $DISTRO == "Ubuntu" ] || [ $DISTRO == "ubuntu" ]
   then
-    sudo apt install git dunst thunar rofi nm-tray fonts-takao libxcb-render-util0-dev libxcb-image0-dev libpixman-1-dev libxcb-util-dev libxcb-damage0-dev libxcb-randr0-dev libxcb-sync-dev libxcb-composite0-dev libxcb-xinerama0-dev libxcb-present-dev libxcb-glx0-dev libegl1-mesa-dev libdbus-glib-1-dev libdrm-dev libxext-dev x11-xserver-utils pkg-config libgl-dev dbus ninja-build meson python3-xcffib uthash-dev libpcre3 libpcre3-dev libev-dev libconfig-dev asciidoc python3 gcc pnmixer feh fonts-font-awesome libxinerama-dev libxft-dev libx11-dev fontconfig xorg xserver-xorg x11proto-dev wget libx11-xcb-dev xarchiver thunar-archive-plugin stalonetray
+    sudo apt install git dunst thunar rofi nm-tray fonts-takao libxcb-render-util0-dev libxcb-image0-dev libpixman-1-dev libxcb-util-dev libxcb-damage0-dev libxcb-randr0-dev libxcb-sync-dev libxcb-composite0-dev libxcb-xinerama0-dev libxcb-present-dev libxcb-glx0-dev libegl1-mesa-dev libdbus-glib-1-dev libdrm-dev libxext-dev x11-xserver-utils pkg-config libgl-dev dbus ninja-build meson python3-xcffib uthash-dev libpcre3 libpcre3-dev libev-dev libconfig-dev asciidoc python3 gcc pnmixer feh fonts-font-awesome libxinerama-dev libxft-dev libx11-dev fontconfig xorg xserver-xorg x11proto-dev wget libx11-xcb-dev xarchiver thunar-archive-plugin stalonetray doas
     sudo add-apt-repository ppa:aslatter/ppa
     sudo apt install alacritty
     wget https://download.jetbrains.com/fonts/JetBrainsMono-2.242.zip
@@ -90,6 +90,9 @@ config_files_setup() {
   ##Configurando stalonetray
   cd ../stalonetray
   cp stalonetrayrc /home/$USER/.config
+  ##Configurando doas para permitir reiniciar y apagar sin root
+  echo "permit ${USER} as root" | sudo tee /etc/doas.conf > /dev/null
+  echo "permit nopass ${USER} shutdown reboot" | sudo tee -a /etc/doas.conf > /dev/null
 }
 
 
