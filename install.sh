@@ -106,13 +106,18 @@ dwm_setup() {
   sudo cp dotfiles/dwminit/statusbar.sh /usr/local/bin
 }
 
-set -eu
-export $(grep -v '^#' .env | xargs)
-dependencias
-picom_setup
-if [ $ADI_LAUNCHERS == "Si" ] || [ $ADI_LAUNCHERS == "Si" ]
-then
-  launcher_setup
-fi
-config_files_setup
-dwm_setup
+
+main() {
+  set -eu
+  export $(grep -v '^#' .env | xargs)
+  dependencias
+  picom_setup
+  if [ $ADI_LAUNCHERS == "Si" ] || [ $ADI_LAUNCHERS == "Si" ]
+  then
+    launcher_setup
+  fi
+  config_files_setup
+  dwm_setup
+}
+
+main
