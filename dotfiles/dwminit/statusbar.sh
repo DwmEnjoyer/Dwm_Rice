@@ -109,7 +109,7 @@ clock() {
 
 main() {
 	while true; do
-		xsetroot -name "$(fsmon) | $(ram) | $(cpu) | $(gpu) | $(clock)"
+		xsetroot -name "$(fsmon) | $(ram) | $(cpu) | $(clock)"
 		sleep 1
 	done
 }
