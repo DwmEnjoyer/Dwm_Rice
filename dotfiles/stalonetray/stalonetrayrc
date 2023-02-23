@@ -1,0 +1,16 @@
+decorations none
+dockapp_mode simple
+fuzzy_edges 3
+#geometry
+#grow_gravity
+#icon_gravity
+icon_size 100
+sticky true
+skip_taskbar true
+transparent false
+window_layer bottom
+vertical false
+window_strut right
+window_type desktop
+background "#333333"
+geometry 2x1
