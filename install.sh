@@ -3,10 +3,10 @@
 dependencies() {
   if [ $DISTRO = "Gentoo" ] || [ $DISTRO = "gentoo" ]
   then
-  sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama x11-terms/alacritty media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi x11-misc/stalonetray app-admin/doas x11-misc/cbatticon
+  sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama x11-terms/alacritty media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi x11-misc/stalonetray app-admin/doas x11-misc/cbatticon app-shells/dash
   elif [ $DISTRO = "Arch" ] || [ $DISTRO = "arch" ]
   then
-    sudo pacman -S git fontconfig xorgproto libx11 libxft libxinerama alacritty ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon
+    sudo pacman -S git fontconfig xorgproto libx11 libxft libxinerama alacritty ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash
     yay -S otf-takao volctl stalonetray
   elif [ $DISTRO = "Ubuntu" ] || [ $DISTRO = "ubuntu" ]
   then
@@ -90,6 +90,8 @@ config_files_setup() {
   ##Configurando stalonetray
   cd ../stalonetray
   cp stalonetrayrc /home/$USER/.config
+  ##Configurando dash como la shell por defecto para /bin/sh
+  sudo ln -sfT dash /bin/sh
   ##Configurando doas para permitir reiniciar y apagar sin poner contraseña
   echo "permit ${USER} as root" | sudo tee /etc/doas.conf > /dev/null
   echo "permit nopass ${USER} as root cmd /usr/sbin/reboot" | sudo tee -a /etc/doas.conf > /dev/null
