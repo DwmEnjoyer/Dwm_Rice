@@ -88,7 +88,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", sel_bg, "-sf", norm_border, "-c", "-h", dmenuheight, "-l", dmenulines, "-p", "探す:", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *powermenucmd[] = { "powermenu", NULL };
+static const char *powermenucmd[] = { "powermenu.sh", NULL };
 static const char *launcher[] = { "launcher.sh", NULL};
 static const char *tray[] = { "stalonetray", NULL };
 #include "shiftview.c"

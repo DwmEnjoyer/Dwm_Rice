@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/sh
 
 # Options for powermenu
 logout=""
@@ -13,13 +13,13 @@ $shutdown" | rofi -dmenu\
                   -p "Power"\
                   -theme "~/.config/rofi/powermenu.rasi")
 # Do something based on selected option
-if [ "$selected_option" == "$logout" ]
+if [ $selected_option = $logout ]
 then
     loginctl terminate-user `whoami`
-elif [ "$selected_option" == "$shutdown" ]
+elif [ $selected_option = $shutdown ]
 then
     shutdown -h now
-elif [ "$selected_option" == "$reboot" ]
+elif [ $selected_option = $reboot ]
 then
     reboot
 else

@@ -2,6 +2,6 @@
 Encoding=UTF-8
 Name=Dwm
 Comment=Tiling window manager written in C
-Exec=dwmstart
+Exec=dwmstart.sh
 Icon=dwm
 Type=XSession
