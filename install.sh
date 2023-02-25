@@ -121,6 +121,7 @@ main() {
   dependencies
   fi
   if [ $PICOM_SETUP -eq 1 ]
+  then
   picom_setup
   fi
   if [ $LAUNCHER_SETUP -eq 1 ]
