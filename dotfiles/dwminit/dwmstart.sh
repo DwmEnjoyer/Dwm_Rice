@@ -4,7 +4,7 @@
 statusbar.sh &
 ###Aplicaciones inicio
 feh --bg-scale /home/alc111/repos/DWM/wallpaper/griffith.png &
-picom --experimental-backends &
+picom &
 #setxkbmap -layout es &
 #pnmixer &
 #volctl &
