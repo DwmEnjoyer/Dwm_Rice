@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int gappx     = 50;        /* gaps between windows*/
 static const int user_bh            = 28;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const unsigned int snap      = 32;	 /* snap pixel */
@@ -29,13 +29,13 @@ static const char col_salmon[]      = "#fa8072";
 static const char sky_blue[]        = "#87ceeb";
 
 /*Chuclados*/
-static const char norm_fg[] = "#EDEDED";
-static const char norm_bg[] = "#333333";
-static const char norm_border[] = "#000000";
+static const char norm_fg[] = "#F7CAC9";
+static const char norm_bg[] = "#2B2E37";
+static const char norm_border[] = "#929AAD";
 
-static const char sel_fg[] = "#EDEDED";
-static const char sel_bg[] = "#333333";
-static const char sel_border[] = "#ffffff";
+static const char sel_fg[] = "#F7CAC9";
+static const char sel_bg[] = "#2B2E37";
+static const char sel_border[] = "#F7CAC9";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -44,7 +44,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+static const char *tags[] = { "一", "二", "三", "四", "五", "六"};
 static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
 static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
@@ -68,9 +68,9 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "[Tile]",      tile },    /* first entry is default */
+	{ "[Float]",      NULL },    /* no layout function means floating behavior */
+	{ "[Full]",      monocle },
 };
 
 /* key definitions */
