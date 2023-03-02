@@ -17,12 +17,12 @@ fsmon() {
 ##	HOMEPART=$(df -h | awk '/\/home/ { print $3}')
 ##	SWAPPART=$(cat /proc/swaps | awk '/\// { print $4 }')
 
-	echo " $ROOTPART"
+	echo "<root> $ROOTPART"
 }
 
 ram() {
 	mem=$(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')
-	echo RAM "$mem"
+	echo "<ram> $mem"
 }
 
 cpu() {
@@ -32,12 +32,12 @@ cpu() {
 	read -r cpu a b c idle rest < /proc/stat
 	total=$((a+b+c+idle))
 	cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
-	echo  "$cpu"%
+	echo "<cpu> $cpu%"
 }
 
 gpu() {
 	status=$( nvidia-smi | grep "Default" | awk '{print $13}' )
-	echo GPU "$status"
+	echo "<gpu> $status"
 }
 
 network() {
