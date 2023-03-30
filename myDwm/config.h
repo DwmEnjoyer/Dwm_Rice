@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 4;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int gappx     = 50;        /* gaps between windows*/
 static const int user_bh            = 28;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const unsigned int snap      = 32;	 /* snap pixel */
@@ -27,6 +27,7 @@ static const char col_purple[]      = "#971fe1";
 static const char col_black[]       = "#000000";
 static const char col_salmon[]      = "#fa8072";
 static const char sky_blue[]        = "#87ceeb";
+static const char neon_blue[]	    = "#15f4ee";
 
 /*Chuclados*/
 static const char norm_fg[] = "#F7CAC9";
@@ -39,8 +40,8 @@ static const char sel_border[] = "#F7CAC9";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { norm_fg, norm_bg, norm_border },
-	[SchemeSel]  = { sel_fg, sel_bg,  sel_border  },
+	[SchemeNorm] = { neon_blue, norm_bg, norm_border },
+	[SchemeSel]  = { neon_blue, sel_bg,  neon_blue  },
 };
 
 /* tagging */

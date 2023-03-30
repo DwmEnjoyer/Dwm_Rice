@@ -11,7 +11,7 @@ separator_height = 4
 separator_color = auto
 padding = 15
 horizontal_padding = 15
-frame_width = 6
+frame_width = 3
 sort = no
 idle_threshold = 120
 font = Hack 10
@@ -42,19 +42,19 @@ context = ctrl+shift+period
 
 [urgency_low]
 timeout = 2
-background = "#131a1c"
-foreground = "#D8D8D8"
-frame_color = "#181f21"
+background = "#2B2E37"
+foreground = "#15f4ee"
+frame_color = "#15f4ee"
 icon = /home/alc111/.config/dunst/normal.png
 [urgency_normal]
 timeout = 5
-background = "#131a1c"
-foreground = "#D8D8D8"
-frame_color = "#181f21"
+background = "#2B2E37"
+foreground = "#15f4ee"
+frame_color = "#15f4ee"
 icon = /home/alc111/.config/dunst/normal.png
 [urgency_critical]
 timeout = 0
-background = "#131a1c"
+background = "#2B2E37"
 foreground = "#E06B74"
 frame_color = "#181f21"
 icon = /home/alc111/.config/dunst/critical.png
