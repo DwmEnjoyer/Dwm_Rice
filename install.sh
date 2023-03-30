@@ -43,7 +43,7 @@ picom_setup() {
       yay -S picom-jonaburg-git
     fi
     mkdir -p /home/${USER:?}/.config/picom
-    cp dotfiles/picom/picom-jonaburg.conf /home/$USER/.config/picom/picom.conf
+    cp dotfiles/picom/picom-jonaburg.conf /home/${USER:?}/.config/picom/picom.conf
   elif [ "${PICOM:?}" = "Ft-labs" ] || [ "${PICOM:?}" = "ft-labs" ]
   then
     if [ "${DISTRO:?}" = "Gentoo" ] || [ "${DISTRO:?}" = "gentoo" ] || [ "${DISTRO:?}" = "Ubuntu" ] || [ "${DISTRO:?}" = "ubuntu" ]
@@ -139,4 +139,4 @@ main() {
   fi
 }
 
-main
+main "${@:?}"
