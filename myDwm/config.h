@@ -28,7 +28,7 @@ static const char col_black[]       = "#000000";
 static const char col_salmon[]      = "#fa8072";
 static const char sky_blue[]        = "#87ceeb";
 static const char neon_blue[]	    = "#15f4ee";
-
+static const char cat_black[]	    = "#131020";
 /*Chuclados*/
 static const char norm_fg[] = "#F7CAC9";
 static const char norm_bg[] = "#2B2E37";
@@ -40,8 +40,8 @@ static const char sel_border[] = "#F7CAC9";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { neon_blue, norm_bg, norm_border },
-	[SchemeSel]  = { neon_blue, sel_bg,  neon_blue  },
+	[SchemeNorm] = { neon_blue, cat_black, cat_black },
+	[SchemeSel]  = { neon_blue, cat_black,  neon_blue  },
 };
 
 /* tagging */

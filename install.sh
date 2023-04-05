@@ -10,8 +10,7 @@ dependencies() {
   then
     sudo pacman -S git fontconfig xorgproto libx11 libxft libxinerama alacritty ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash
     yay -S otf-takao volctl stalonetray
-  elif [ "${DISTRO:?}" = "Ubuntu" ] || [ "${DISTRO:?}" = "ubuntu" ]
-  then
+  else
     sudo apt install git build-essential dunst thunar rofi nm-tray fonts-takao libxcb-render-util0-dev libxcb-image0-dev libpixman-1-dev libxcb-util-dev libxcb-damage0-dev libxcb-randr0-dev libxcb-sync-dev libxcb-composite0-dev libxcb-xinerama0-dev libxcb-present-dev libxcb-glx0-dev libegl1-mesa-dev libdbus-glib-1-dev libdrm-dev libxext-dev x11-xserver-utils pkg-config libgl-dev dbus ninja-build meson python3-xcffib uthash-dev libpcre3 libpcre3-dev libev-dev libconfig-dev asciidoc python3 gcc pnmixer feh fonts-font-awesome libxinerama-dev libxft-dev libx11-dev fontconfig xorg xserver-xorg x11proto-dev wget libx11-xcb-dev xarchiver thunar-archive-plugin stalonetray doas cbatticon
     sudo add-apt-repository ppa:aslatter/ppa
     sudo apt install alacritty
@@ -21,9 +20,6 @@ dependencies() {
     sudo mv ttf /usr/share/fonts/jetbrains-mono
     sudo fc-cache -f -v
     cd ..
-  else
-    echo "Las únicas opciones válidas son Gentoo/gentoo, Arch/arch o Ubuntu/ubuntu."
-    exit 1
   fi
 }
 
@@ -42,8 +38,8 @@ picom_setup() {
     else
       yay -S picom-jonaburg-git
     fi
-    mkdir -p /home/${USER:?}/.config/picom
-    cp dotfiles/picom/picom-jonaburg.conf /home/${USER:?}/.config/picom/picom.conf
+    mkdir -p ~/.config/picom
+    cp dotfiles/picom/picom-jonaburg.conf ~/.config/picom/picom.conf
   elif [ "${PICOM:?}" = "Ft-labs" ] || [ "${PICOM:?}" = "ft-labs" ]
   then
     if [ "${DISTRO:?}" = "Gentoo" ] || [ "${DISTRO:?}" = "gentoo" ] || [ "${DISTRO:?}" = "Ubuntu" ] || [ "${DISTRO:?}" = "ubuntu" ]
@@ -59,8 +55,8 @@ picom_setup() {
     else
       yay -S picom-ftlabs-git
     fi
-    mkdir -p /home/${USER:?}/.config/picom
-    cp dotfiles/picom/picom-labs.conf /home/${USER:?}/.config/picom/picom.conf
+    mkdir -p ~/.config/picom
+    cp dotfiles/picom/picom-labs.conf ~/.config/picom/picom.conf
   else
     echo "Las únicas opciones válidas son Jonaburg/jonaburg, o Ft-labs/ft-labs"
     exit 1
@@ -79,31 +75,54 @@ launcher_setup() {
 }
 
 config_files_setup() {
-  ##Configurando dunst
-  mkdir -p /home/${USER:?}/.config/dunst
+  ##Configuring dunst
+  mkdir -p ~/.config/dunst
   cd dotfiles/dunst
-  cp -- * /home/${USER:?}/.config/dunst
-  ##Configurando el powermenu
+  cp -- * ~/.config/dunst
+  ##Configuring powermenu
   cd ../powermenu
-  mkdir -p /home/${USER:?}/.config/rofi
-  cp powermenu.rasi /home/${USER:?}/.config/rofi
+  mkdir -p ~/.config/rofi
+  cp powermenu.rasi ~/.config/rofi
   sudo cp powermenu.sh /usr/local/bin
   sudo chmod +x /usr/local/bin/powermenu.sh
-  ##Configurando stalonetray
+  ##Configuring stalonetray
   cd ../stalonetray
-  cp stalonetrayrc /home/${USER:?}/.config
-  ##Configurando dash como la shell por defecto para /bin/sh
+  cp stalonetrayrc ~/.config
+  cd ../..
+  ##Configuring dash as default shell for /bin/sh
   sudo ln -sfT dash /bin/sh
   ##Configurando doas para permitir reiniciar y apagar sin poner contraseña
+  ##Configuring doas to allow restart or poweroff without sudo
   echo "permit ${USER:?} as root" | sudo tee /etc/doas.conf > /dev/null
   echo "permit nopass ${USER:?} as root cmd /usr/sbin/reboot" | sudo tee -a /etc/doas.conf > /dev/null
   echo "permit nopass ${USER:?} as root cmd /usr/sbin/shutdown" | sudo tee -a /etc/doas.conf > /dev/null
 }
 
+terminal_setup() {
+  ##Installing fish shell
+  if [ "${DISTRO:?}" = "Gentoo" ] || [ "${DISTRO:?}" = "gentoo" ]
+  then
+    sudo emerge --ask app-shells/fish
+  elif [ "${DISTRO:?}" = "Arch" ] || [ "${DISTRO:?}" = "arch" ]
+  then
+    sudo pacman -S fish
+  else
+    sudo apt install fish
+  fi
+  ##Installing starship prompt
+  curl -sS https://starship.rs/install.sh | sh
+  ##Installing fm6000
+  sh -c "$(curl https://codeberg.org/anhsirk0/fetch-master-6000/raw/branch/main/install.sh)"
+  mkdir -p ~/.config/pixelart
+  cp dotfiles/pixelart/space_invader.txt ~/.config/pixelart
+  rm ~/.config/fish/config.fish
+  cp dotfiles/fish/config.fish ~/.config/fish/config.fish
+  chsh -s /bin/fish "${USER:?}"
+}
 
 dwm_setup() {
   ##DWM y DMENU
-  cd ../../myDwm
+  cd myDwm
   sudo make clean install
   cd ../myDmenu
   sudo make clean install
@@ -114,29 +133,49 @@ dwm_setup() {
   sudo cp dotfiles/dwminit/statusbar.sh /usr/local/bin
 }
 
+valid_distro() {
+  valid="false"
+  if [ "${DISTRO:?}" = "Gentoo" ] || [ "${DISTRO:?}" = "gentoo" ] || [ "${DISTRO:?}" = "Arch" ] || [ "${DISTRO:?}" = "arch" ] || [ "${DISTRO:?}" = "Ubuntu" ] || [ "${DISTRO:?}" = "ubuntu" ]
+  then
+    valid="true"
+  fi
+  echo $valid
+}
+
 
 main() {
   export $(grep -v '^#' .env | xargs)
+  valid=$(valid_distro)
+  if [ "${valid:?}" = "true" ]
+  then
   if [ ${DEPENDENCIES:?} -eq 1 ]
-  then
-  dependencies
-  fi
-  if [ ${PICOM_SETUP:?} -eq 1 ]
-  then
-  picom_setup
-  fi
-  if [ ${LAUNCHER_SETUP:?} -eq 1 ]
-  then
-    launcher_setup
-  fi
-  if [ ${CONFIG_FILES_SETUP:?} -eq 1 ]
-  then
-  config_files_setup
-  fi
-  if [ ${DWM_SETUP:?} -eq 1 ]
-  then
-  dwm_setup
+    then
+      dependencies
+    fi
+    if [ ${PICOM_SETUP:?} -eq 1 ]
+    then
+      picom_setup
+    fi
+    if [ ${LAUNCHER_SETUP:?} -eq 1 ]
+    then
+      launcher_setup
+    fi
+    if [ ${CONFIG_FILES_SETUP:?} -eq 1 ]
+    then
+      config_files_setup
+    fi
+    if [ ${TERMINAL_SETUP:?} -eq 1 ]
+    then
+      terminal_setup
+    fi
+    if [ ${DWM_SETUP:?} -eq 1 ]
+    then
+      dwm_setup
+    fi
+  else
+    echo "Las únicos valores válidos para la variable distribución son Gentoo/gentoo, Arch/arch, Ubuntu/ubuntu"
+    exit 1
   fi
 }
 
-main "${@:?}"
+main
