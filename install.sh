@@ -91,7 +91,6 @@ config_files_setup() {
   cd ../..
   ##Configuring dash as default shell for /bin/sh
   sudo ln -sfT dash /bin/sh
-  ##Configurando doas para permitir reiniciar y apagar sin poner contraseña
   ##Configuring doas to allow restart or poweroff without sudo
   echo "permit ${USER:?} as root" | sudo tee /etc/doas.conf > /dev/null
   echo "permit nopass ${USER:?} as root cmd /usr/sbin/reboot" | sudo tee -a /etc/doas.conf > /dev/null
@@ -113,10 +112,13 @@ terminal_setup() {
   curl -sS https://starship.rs/install.sh | sh
   ##Installing fm6000
   sh -c "$(curl https://codeberg.org/anhsirk0/fetch-master-6000/raw/branch/main/install.sh)"
+  ##Adding pixel art for fm6000
   mkdir -p ~/.config/pixelart
   cp dotfiles/pixelart/space_invader.txt ~/.config/pixelart
-  rm ~/.config/fish/config.fish
+  ##Adding fish config
+  mkdir -p ~/.config/fish
   cp dotfiles/fish/config.fish ~/.config/fish/config.fish
+  ##Changing shell for actual user
   chsh -s /bin/fish "${USER:?}"
 }
 
