@@ -5,7 +5,8 @@ set -eu
 dependencies() {
   if [ "${DISTRO:?}" = "Gentoo" ] || [ "${DISTRO:?}" = "gentoo" ]
   then
-    sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama x11-terms/alacritty media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi x11-misc/stalonetray app-admin/doas x11-misc/cbatticon app-shells/dash lxde-base/lxappearance x11-misc/sddm net-p2p/qbittorrent
+    sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama x11-terms/alacritty media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi app-admin/doas x11-misc/cbatticon app-shells/dash lxde-base/lxappearance x11-misc/sddm net-p2p/qbittorrent sys-apps/exa net-libs/nodejs 
+    sudo npm i -g alacritty-themes
     cd ..
     git clone https://github.com/aczw/sddm-theme-corners.git
     cd sddm-theme-corners
@@ -13,12 +14,13 @@ dependencies() {
     cd ../DWM
   elif [ "${DISTRO:?}" = "Arch" ] || [ "${DISTRO:?}" = "arch" ]
   then
-    sudo pacman -S git fontconfig xorgproto libx11 libxft libxinerama alacritty ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash lxappearance sddm qbittorrent
-    yay -S otf-takao volctl stalonetray pnmixer alacritty-themes exa sddm-theme-corners-git
+    sudo pacman -S git fontconfig xorgproto libx11 libxft libxinerama alacritty ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash lxappearance sddm qbittorrent papirus-icon-theme
+    yay -S otf-takao volctl pnmixer alacritty-themes exa sddm-theme-corners-git mojave-gtk-theme-git bibata-cursor-theme-bin
   else
     sudo add-apt-repository ppa:aslatter/ppa
     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable
-    sudo apt install git build-essential dunst thunar rofi nm-tray fonts-takao libxcb-render-util0-dev libxcb-image0-dev libpixman-1-dev libxcb-util-dev libxcb-damage0-dev libxcb-randr0-dev libxcb-sync-dev libxcb-composite0-dev libxcb-xinerama0-dev libxcb-present-dev libxcb-glx0-dev libegl1-mesa-dev libdbus-glib-1-dev libdrm-dev libxext-dev x11-xserver-utils pkg-config libgl-dev dbus ninja-build meson python3-xcffib uthash-dev libpcre3 libpcre3-dev libev-dev libconfig-dev asciidoc python3 gcc pnmixer feh fonts-font-awesome libxinerama-dev libxft-dev libx11-dev fontconfig xorg xserver-xorg x11proto-dev wget libx11-xcb-dev xarchiver thunar-archive-plugin stalonetray doas cbatticon lxappearance sddm alacritty qbittorrent
+    sudo apt install git build-essential nodejs npm dunst thunar rofi nm-tray fonts-takao libxcb-render-util0-dev libxcb-image0-dev libpixman-1-dev libxcb-util-dev libxcb-damage0-dev libxcb-randr0-dev libxcb-sync-dev libxcb-composite0-dev libxcb-xinerama0-dev libxcb-present-dev libxcb-glx0-dev libegl1-mesa-dev libdbus-glib-1-dev libdrm-dev libxext-dev x11-xserver-utils pkg-config libgl-dev dbus ninja-build meson python3-xcffib uthash-dev libpcre3 libpcre3-dev libev-dev libconfig-dev asciidoc python3 gcc pnmixer feh fonts-font-awesome libxinerama-dev libxft-dev libx11-dev fontconfig xorg xserver-xorg x11proto-dev wget libx11-xcb-dev xarchiver thunar-archive-plugin doas cbatticon lxappearance sddm alacritty qbittorrent
+    sudo npm i -g alacritty-themes
     wget https://download.jetbrains.com/fonts/JetBrainsMono-2.242.zip
     unzip JetBrainsMono-2.242.zip
     cd fonts
@@ -131,6 +133,9 @@ terminal_setup() {
   curl -sS https://starship.rs/install.sh | sh
   ##Installing fm6000
   sh -c "$(curl https://codeberg.org/anhsirk0/fetch-master-6000/raw/branch/main/install.sh)"
+  ##Adding alacritty config
+  mkdir -p ~/.config/alacritty
+  cp dotfiles/alacritty/alacritty.yml
   ##Adding pixel art for fm6000
   mkdir -p ~/.config/pixelart
   cp dotfiles/pixelart/space_invader.txt ~/.config/pixelart
