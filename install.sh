@@ -14,7 +14,7 @@ dependencies() {
   elif [ "${DISTRO:?}" = "Arch" ] || [ "${DISTRO:?}" = "arch" ]
   then
     sudo pacman -S git fontconfig xorgproto libx11 libxft libxinerama alacritty ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash lxappearance sddm qbittorrent
-    yay -S otf-takao volctl stalonetray pnmixer sddm-theme-corners-git
+    yay -S otf-takao volctl stalonetray pnmixer alacritty-themes exa sddm-theme-corners-git
   else
     sudo add-apt-repository ppa:aslatter/ppa
     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable
@@ -103,6 +103,7 @@ config_files_setup() {
   cp macchiato.qbtheme ~/.config/qBittorrent/themes
   ##Configuring sddm
   cd ../sddm
+  sudo mkdir -p /etc/sddm.conf.d
   sudo cp sddm.conf /etc/sddm.conf.d
   sudo cp faces/root.face.icon /usr/share/sddm/faces/"${USER:?}".face.icon
   sudo systemctl enable -f sddm.service

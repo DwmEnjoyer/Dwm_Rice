@@ -3,9 +3,6 @@ if status is-interactive
 	function ls
 		exa --icons $argv
 	end
-	function ssh
-		TERM=xterm-256color ssh
-	end
 	##VARIABLES
 	set fish_greeting
 	##STARTUP COMMANDS
