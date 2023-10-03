@@ -15,7 +15,7 @@ $shutdown" | rofi -dmenu\
 # Do something based on selected option
 if [ $selected_option = $logout ]
 then
-    loginctl terminate-user `whoami`
+	loginctl kill-user $(whoami)
 elif [ $selected_option = $shutdown ]
 then
     shutdown -h now
