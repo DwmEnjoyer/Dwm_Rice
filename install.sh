@@ -8,7 +8,16 @@ dependencies() {
     sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi app-admin/doas x11-misc/cbatticon app-shells/dash lxde-base/lxappearance x11-misc/sddm net-p2p/qbittorrent sys-apps/exa net-libs/nodejs media-fonts/hack dev-util/cmake
   elif [ "${DISTRO:?}" = "Arch" ] || [ "${DISTRO:?}" = "arch" ]
   then
-    sudo pacman -S git fontconfig xorgproto libx11 libxft libxinerama ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash lxappearance sddm qbittorrent papirus-icon-theme nodejs npm ttf-hack-nerd cmake
+    sudo pacman -S git base-devel fontconfig xorgproto libx11 libxft libxinerama ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash lxappearance sddm qbittorrent papirus-icon-theme nodejs npm ttf-hack-nerd cmake
+    command -v yay >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+      cd ..
+      git clone https://aur.archlinux.org/yay.git
+      cd yay/
+      makepkg -si
+      cd ../Dwm_Rice
+    fi
     yay -S otf-takao volctl pnmixer exa mojave-gtk-theme-git bibata-cursor-theme-bin
   else
     sudo add-apt-repository ppa:aslatter/ppa
@@ -21,8 +30,6 @@ dependencies() {
     sudo fc-cache -f -v
     cd ../Dwm_Rice
   fi
-  #Installing Vim plugin manager Dein
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh)"
 }
 
 picom_setup() {
@@ -55,6 +62,9 @@ launcher_and_powermenu_setup() {
 }
 
 config_files_setup() {
+  #Installing Vim plugin manager Dein
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh)"
+  #Checking existing dirs
   rice_dir=$(pwd)
   cd ~
   git clone https://github.com/DwmEnjoyer/.dotfiles.git
