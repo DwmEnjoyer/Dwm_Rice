@@ -5,10 +5,10 @@ set -eu
 dependencies() {
   if [ "${DISTRO:?}" = "Gentoo" ] || [ "${DISTRO:?}" = "gentoo" ]
   then
-    sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi app-admin/doas x11-misc/cbatticon app-shells/dash lxde-base/lxappearance x11-misc/sddm net-p2p/qbittorrent sys-apps/exa net-libs/nodejs media-fonts/hack dev-util/cmake
+    sudo emerge --ask dev-vcs/git media-libs/fontconfig x11-base/xorg-proto x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama media-fonts/jetbrains-mono media-fonts/fontawesome media-gfx/feh x11-apps/xsetroot x11-apps/setxkbmap media-fonts/takao-fonts media-sound/pnmixer  gnome-extra/nm-applet sys-devel/gcc app-text/asciidoc dev-lang/python dev-libs/libconfig dev-libs/libev dev-libs/libpcre dev-libs/uthash dev-python/xcffib  dev-util/meson dev-util/meson-format-array dev-util/ninja sys-apps/dbus virtual/opengl virtual/pkgconfig x11-apps/xhost x11-base/xorg-server x11-libs/libXext x11-libs/libdrm x11-libs/libxcb x11-libs/pixman x11-libs/xcb-util-image x11-libs/xcb-util-renderutil x11-misc/dunst xfce-base/thunar xfce-extra/xarchiver xfce-extra/thunar-archive-plugin x11-misc/rofi app-admin/doas x11-misc/cbatticon app-shells/dash lxde-base/lxappearance x11-misc/sddm net-p2p/qbittorrent sys-apps/exa net-libs/nodejs media-fonts/hack dev-util/cmake app-admin/stow
   elif [ "${DISTRO:?}" = "Arch" ] || [ "${DISTRO:?}" = "arch" ]
   then
-    sudo pacman -S git base-devel fontconfig xorgproto libx11 libxft libxinerama ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash lxappearance sddm qbittorrent papirus-icon-theme nodejs npm ttf-hack-nerd cmake
+    sudo pacman -S bc git base-devel fontconfig xorgproto libx11 libxft libxinerama ttf-jetbrains-mono ttf-font-awesome feh xorg-xsetroot xorg-setxkbmap network-manager-applet dunst thunar xarchiver thunar-archive-plugin rofi doas cbatticon dash lxappearance sddm qbittorrent papirus-icon-theme nodejs npm ttf-hack-nerd cmake meson libev uthash libconfig stow
     command -v yay >/dev/null 2>&1
     if [ $? -ne 0 ]
     then
@@ -18,11 +18,11 @@ dependencies() {
       makepkg -si
       cd ../Dwm_Rice
     fi
-    yay -S otf-takao volctl pnmixer exa mojave-gtk-theme-git bibata-cursor-theme-bin
+    yay -S otf-takao volctl pnmixer exa mojave-gtk-theme-git
   else
     sudo add-apt-repository ppa:aslatter/ppa
     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable
-    sudo apt install git build-essential nodejs npm dunst thunar rofi nm-tray fonts-takao libxcb-render-util0-dev libxcb-image0-dev libpixman-1-dev libxcb-util-dev libxcb-damage0-dev libxcb-randr0-dev libxcb-sync-dev libxcb-composite0-dev libxcb-xinerama0-dev libxcb-present-dev libxcb-glx0-dev libegl1-mesa-dev libdbus-glib-1-dev libdrm-dev libxext-dev x11-xserver-utils pkg-config libgl-dev dbus ninja-build meson python3-xcffib uthash-dev libpcre3 libpcre3-dev libev-dev libconfig-dev asciidoc python3 gcc pnmixer feh fonts-font-awesome libxinerama-dev libxft-dev libx11-dev fontconfig xorg xserver-xorg x11proto-dev wget libx11-xcb-dev xarchiver thunar-archive-plugin doas cbatticon lxappearance sddm qbittorrent fonts-hack-ttf cmake
+    sudo apt install git build-essential nodejs npm dunst thunar rofi nm-tray fonts-takao libxcb-render-util0-dev libxcb-image0-dev libpixman-1-dev libxcb-util-dev libxcb-damage0-dev libxcb-randr0-dev libxcb-sync-dev libxcb-composite0-dev libxcb-xinerama0-dev libxcb-present-dev libxcb-glx0-dev libegl1-mesa-dev libdbus-glib-1-dev libdrm-dev libxext-dev x11-xserver-utils pkg-config libgl-dev dbus ninja-build meson python3-xcffib uthash-dev libpcre3 libpcre3-dev libev-dev libconfig-dev asciidoc python3 gcc pnmixer feh fonts-font-awesome libxinerama-dev libxft-dev libx11-dev fontconfig xorg xserver-xorg x11proto-dev wget libx11-xcb-dev xarchiver thunar-archive-plugin doas cbatticon lxappearance sddm qbittorrent fonts-hack-ttf cmake stow
     wget https://download.jetbrains.com/fonts/JetBrainsMono-2.242.zip
     unzip JetBrainsMono-2.242.zip
     cd fonts
@@ -57,13 +57,13 @@ launcher_and_powermenu_setup() {
   sudo chmod +x /usr/local/bin/launcher.sh
   ##Installing powermenu
   cp config/powermenu/powermenu.rasi ~/.config/rofi
-  sudo cp powermenu.sh /usr/local/bin
+  sudo cp config/powermenu/powermenu.sh /usr/local/bin
   sudo chmod +x /usr/local/bin/powermenu.sh
 }
 
 config_files_setup() {
   #Installing Vim plugin manager Dein
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh)"
+  sh -c "$(wget -O- https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh)"
   #Checking existing dirs
   rice_dir=$(pwd)
   cd ~
@@ -106,7 +106,7 @@ config_files_setup() {
     mv ~/.config/starship/starship.toml ~/.config/starship/starship.toml.old
   fi
   mkdir -p ~/.config/alacritty ~/.config/dunst ~/.config/fish ~/.config/glava ~/.config/nvim ~/.config/picom ~/.config/pipewire ~/.config/qBittorrent ~/.config/starship
-  stow .
+  stow alacritty dunst fish glava nvim picom pipewire qBittorrent starship
   cd "${rice_dir:?}"
 }
 
@@ -150,7 +150,7 @@ terminal_setup() {
   cd ..
   git clone https://github.com/DwmEnjoyer/Flowetch.git
   cd Flowetch/
-  sudo make clean install
+  sudo make install
   cd ../Dwm_Rice
 }
 
@@ -158,10 +158,7 @@ dwm_setup() {
   ##Instalación Dwm y Dmenu
   cd ..
   git clone https://github.com/DwmEnjoyer/Dwm.git
-  git clone https://github.com/DwmEnjoyer/Dmenu.git
-  cd Dmenu/
-  sudo make clean install
-  cd ../Dwm
+  cd Dwm/
   sudo make clean install
   ##Instalación de archivos de inicio de DWM
   sudo cp scripts/dwmstart.sh /usr/local/bin
